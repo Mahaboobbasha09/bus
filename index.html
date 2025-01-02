@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Booking Search Bar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f7f7;
+        }
+
+        .search-bar {
+            display: flex;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 600px;
+            margin-top: 20px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            border: none;
+            padding: 15px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-bar input:hover {
+            background-color: rgb(35, 209, 218);
+        }
+
+        .search-bar input::placeholder {
+            color: #000000;
+        }
+
+        .search-bar button {
+            background-color: #040f1b;
+            color: #fff;
+            border: none;
+            padding: 15px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #088233;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            color: #000000;
+        }
+
+        .card {
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin: 20px 0;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-left {
+            flex: 2;
+        }
+
+        .card-left h3 {
+            font-size: 18px;
+            margin: 0;
+            color: #333;
+        }
+
+        .card-left p {
+            font-size: 14px;
+            margin: 5px 0;
+            color: #777;
+        }
+
+        .card-middle {
+            flex: 1.5;
+            text-align: center;
+        }
+
+        .card-middle h4 {
+            font-size: 16px;
+            margin: 0;
+            color: #333;
+        }
+
+        .card-middle p {
+            font-size: 14px;
+            margin: 5px 0;
+            color: #888;
+        }
+
+        .card-right {
+            flex: 1;
+            text-align: right;
+        }
+
+        .card-right h3 {
+            font-size: 18px;
+            margin: 0;
+            color: #333;
+        }
+
+        .card-right button {
+            background-color: #ff5722;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .card-right button:hover {
+            background-color: #e64a19;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .card-right {
+                text-align: left;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <form class="search-bar">
+            <input type="text" id="text" placeholder="Enter Source">
+            <input type="text" id="dest" placeholder="Enter Destination">
+            <button type="button" onclick="fun()">Search</button>
+        </form>
+        <div class="result" id="cont"></div>
+        <div id="card"></div>
+    </div>
+    <script>
+        function fun() {
+            let inp1 = document.getElementById("text").value;
+            let inp2 = document.getElementById("dest").value;
+            let display = document.getElementById("cont");
+            let parent = document.getElementById("card");
+
+            // Clear previous results
+            display.innerHTML = "";
+            parent.innerHTML = "";
+
+            if (inp1 && inp2) {
+                let resultBox = document.createElement("div");
+                resultBox.className = "result-box";
+
+                let message = document.createElement("p");
+                message.textContent = `Searching buses from ${inp1} to ${inp2}...`;
+
+                let welcomeMessage = document.createElement("h2");
+                welcomeMessage.textContent = "Welcome to Bus Booking";
+
+                resultBox.append(welcomeMessage, message);
+                display.appendChild(resultBox);
+
+                let data = [
+                    {
+                        "id": 1,
+                        "name": "Abhi Travels",
+                        "type": "AC Sleeper (2+1)",
+                        "live": "Live Tracking",
+                        "time": "22:30",
+                        "from": "Hyderabad",
+                        "hours": "09h 15m",
+                        "to": "Bengaluru",
+                        "price": "₹950",
+                        "seat": "Select seat",
+                        "available": "28 Seats Available"
+                    },
+                    {
+                        "id": 2,
+                        "name": "Indhu Travels",
+                        "type": "AC Sleeper (2+1)",
+                        "live": "Live Tracking",
+                        "time": "23:00",
+                        "from": "Hyderabad",
+                        "hours": "09h 15m",
+                        "to": "Bengaluru",
+                        "price": "₹800",
+                        "seat": "Select seat",
+                        "available": "28 Seats Available"
+                    },
+                    {
+                        "id": 3,
+                        "name": "Vishal Travels",
+                        "type": "AC Sleeper (2+1)",
+                        "live": "Live Tracking",
+                        "time": "23:30",
+                        "from": "Hyderabad",
+                        "hours": "09h 10m",
+                        "to": "Bengaluru",
+                        "price": "₹1050",
+                        "seat": "Select seat",
+                        "available": "28 Seats Available"
+                    }
+                ];
+
+                data.forEach((val) => {
+                    let card = document.createElement("div");
+                    card.className = "card";
+
+                    let childA = document.createElement("div");
+                    childA.className = "card-left";
+
+                    let name = document.createElement("h3");
+                    name.innerText = val.name;
+
+                    let type = document.createElement("p");
+                    type.innerText = val.type;
+
+                    let live = document.createElement("p");
+                    live.innerText = val.live;
+
+                    childA.append(name, type, live);
+
+                    let childB = document.createElement("div");
+                    childB.className = "card-middle";
+
+                    let time = document.createElement("h3");
+                    time.innerText = val.time;
+
+                    let from = document.createElement("p");
+                    from.innerText = val.from;
+
+                    let hours = document.createElement("p");
+                    hours.innerText = val.hours;
+
+                    let to = document.createElement("p");
+                    to.innerText = val.to;
+
+                    childB.append(time, from, hours, to);
+
+                    let childC = document.createElement("div");
+                    childC.className = "card-right";
+
+                    let price = document.createElement("h3");
+                    price.innerText = val.price;
+
+                    let seat = document.createElement("button");
+                    seat.innerText = val.seat;
+
+                    let available = document.createElement("p");
+                    available.innerText = val.available;
+
+                    childC.append(price, seat, available);
+
+                    card.append(childA, childB, childC);
+                    parent.appendChild(card);
+                });
+            } else {
+                display.textContent = "Please fill both fields.";
+            }
+        }
+    </script>
+</body>
+</html>
